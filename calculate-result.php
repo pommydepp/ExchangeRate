@@ -66,14 +66,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Result</title>
+    <title>Result & History</title>
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container">
+        <ul class="nav nav-pills justify-content-center mt-3">
+			<li class="nav-item">
+				<a class="nav-link" href="index.html">หน้าหลัก</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link active" href="calculate-result.php">ประวัติการแลกเปลี่ยน</a>
+			</li>
+		</ul>
+        
         <div class="row">
             <div class="mx-auto mt-4">
-            <h1 style="font-weight:bold;">จำนวนเงินในการแลกเปลี่ยน</h1>
+            <h3 style="font-weight:bold;">จำนวนเงินในการแลกเปลี่ยน</h3>
                 <form action="calculate-result.php" method="post" class="form-control mt-4">
                 <?php 
                     echo "จำนวนเงินที่แลก : ".$thb." บาท";
@@ -89,32 +98,34 @@
 
         <div class="row">
             <div class="mx-auto mt-4">
-                <div class="col-md-12">
+                <h4 class=" mt-4" style="font-weight:bold;">ข้อมูลการแลกเงินย้อนหลัง</h4>
                     <form class="form-control">
+                        
                         <?php
                             $sql = "SELECT * FROM exchange585_history ORDER BY dateRecord DESC";
                             
                             $sql_exe = $conn->query($sql);
 
                             while ($row = mysqli_fetch_assoc($sql_exe)) {
-                                echo $row['thb']." exchange to".$row['currency']." = ".$row['calculated']." ".$row['dateRecord'];
+  
+                                echo $row['thb']." exchange to ".$row['currency']." = ".$row['calculated']." ".$row['dateRecord'];
                         ?>
                                 <a href="delete.php?id=<?php echo $row['recordID']; ?> &thb=<?php echo $row['thb']?>">Delete</a>
                                
-                    </form>
-                    <?php
-                            $conn->close();
-                            echo "<br>";
-                                // $array['key/field name']
-                            }
-                            
+                    
+                        <?php
+                                $conn->close();
+                                echo "<br>";
+                                    // $array['key/field name']
+                                }
+                                
                         ?>
-                </div>
+                    </form>
             </div>
         </div>
     </div>
+
+    <footer><div class="text-center mt-5"><p>Copyright 2018, Thanakorn Hongsa</p></div></footer>
 </body>
-
 <script src="js.bootstrap.min.js"></script>
-
 </html>
